@@ -1,51 +1,35 @@
-// import { Movie } from './Movies.styled';
-
-// export const Movies = () => {
-//   return <Movie>Bye world</Movie>;
-// };
-
 import Loader from 'components/Loader/Loader';
 import { useEffect, useState } from 'react';
 import { getSerchMovies } from 'services/ApiService';
 import MovieSearchForm from 'MovieSeorchForm/MovieSearchForm';
 import MovieList from 'components/MovieList/MovieList';
+import { useSearchParams } from 'react-router-dom';
 
 export const Movies = () => {
   const [serchMovies, setSerchMovies] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [pageName, setPageName] = useState('');
- 
-    const formSubmitHandler = pageName => {
-    setPageName(pageName);
-    };
+  const [searchParams, setSearchParams] = useSearchParams();
+  const queryParam = searchParams.get('query') ?? '';
 
-console.log(pageName);
+ 
+  const formSubmitHandler = pageName => {
+    setSearchParams({ query: pageName });
+  };
 
   useEffect(() => {
-    console.log(pageName);
-    if (pageName === '') {
+    if (queryParam === '') {
       return;
     }
     setLoading(true);
-    getSerchMovies(pageName)
+    getSerchMovies(queryParam)
       .then(res => setSerchMovies(res))
       .finally(() => setLoading(false));
-  }, [pageName]);
+  }, [queryParam]);
   return (
     <>
-      {loading && <Loader />}
-      {/* <Container> */}
       {serchMovies && <MovieSearchForm onSubmit={formSubmitHandler} />}
+      {loading && <Loader />}
       {<MovieList movies={serchMovies} />}
-      {console.log(serchMovies)};
-      {/* {trendingMovies?.total_pages && (
-          <PaginatedItems
-            setPage={setSearchParams}
-            totalPages={trendingMovies.total_pages}
-            currentPage={pageParam - 1}
-          />
-        )} */}
-      {/* </Container> */}
     </>
   );
 };

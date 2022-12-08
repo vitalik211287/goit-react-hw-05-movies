@@ -1,6 +1,8 @@
 import MovieItem from "components/MovieItem/MovieItem";
 import React from 'react';
 import { Item } from "./MovieList.styled";
+import PropTypes from 'prop-types';
+
 
 const MovieList = ({ movies }) => {
     return (
@@ -12,5 +14,7 @@ const MovieList = ({ movies }) => {
     );
 };
 
-
+MovieList.ptopTypes = {
+  movies: PropTypes.array,
+};
 export default MovieList;

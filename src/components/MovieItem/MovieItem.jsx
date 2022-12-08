@@ -1,5 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { Img, Li, P } from './MovieItem.styled';
+import PropTypes from 'prop-types';
 
 const MovieItem = ({
   id,
@@ -32,5 +33,11 @@ const MovieItem = ({
       </NavLink>
     </Li>
   );
+};
+MovieItem.propTypes = {
+  id: PropTypes.number,
+  title: PropTypes.string,
+  poster_path: PropTypes.string,
+  release_date: PropTypes.string,
 };
 export default MovieItem;
